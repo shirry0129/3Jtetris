@@ -6,11 +6,22 @@
 /// <param name="start">¶ã‚ÌÀ•W</param>
 Board::Board(Point origin) {
 	int i, j;
+
+	tetris_exists = false;
 	
-	for (i = 0; i < 10; i++) {
-		for (j = 0; j < 20; j++) {
-			board[i][j].cell = Rect(origin + Point(i * 30, j * 30), 30);
+	for (i = 0; i < 12; i++) {
+		for (j = 0; j < 23; j++) {
+			board[i][j].cell = Rect(origin - Point(30, 60) + Point(i * 30, j * 30), 30);
 		}
+	}
+
+	for (i = 0; i < 23; i++) {
+		board[0][i].is_buried = true;
+		board[11][i].is_buried = true;
+	}
+
+	for (i = 0; i < 12; i++) {
+		board[i][22].is_buried = true;
 	}
 }
 
@@ -93,8 +104,8 @@ void Board::grate_line() {
 void Board::draw(){
 	int i, j;
 	
-	for (i = 0; i < 10; i++) {
-		for (j = 0; j < 20; j++) {
+	for (i = 1; i < 11; i++) {
+		for (j = 2; j < 22; j++) {
 			if (board[i][j].is_buried) {
 				board[i][j].cell.draw(board[i][j].cell_color);
 			}
